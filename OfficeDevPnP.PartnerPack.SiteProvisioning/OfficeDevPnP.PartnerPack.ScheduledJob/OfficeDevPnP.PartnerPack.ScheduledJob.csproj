@@ -216,6 +216,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\webjob-publish-settings.json" />
+    <None Include="settings.job">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfficeDevPnP.PartnerPack.Infrastructure\OfficeDevPnP.PartnerPack.Infrastructure.csproj">
