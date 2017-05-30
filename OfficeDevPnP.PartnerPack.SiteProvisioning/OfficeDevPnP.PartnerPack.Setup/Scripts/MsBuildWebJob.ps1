@@ -7,7 +7,7 @@ pushd $ProjectPath
 
 # Get the path of MSBuild v. 14.0.25420.1 or higher
 $vs15 = Get-ItemProperty "hklm:\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\SxS\VS7"
-$msBuild15Path = $vs15.'15.0' + "\MSBuild\15.0\bin\msbuild.exe"
+$msBuild15Path = $vs15.'15.0' + "MSBuild\15.0\bin\msbuild.exe"
 $vsVersion = "15.0"
 if (Test-Path $msBuild15Path)
 {
