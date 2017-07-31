@@ -4,16 +4,8 @@
 # Set which file ending to enclude in the replace
 if($Filter -eq $null -or $Filter -eq ""){
     Write-Host("Files to replace not defined, using default files")
-    $Filter = "*.config"
+    $Filter = ('app.config','web.config')
 }
-
-# Get all files in path
-Write-Host("Getting all files from " + $Path + ", using the filter: " + $Filter)
-
-Get-ChildItem $Path -Recurse -Filter $Filter |
-    ForEach-Object {
-        ReplaceTokenInFile($_)
-    }
 
 function ReplaceTokenInFile($file){
     
@@ -27,3 +19,11 @@ function ReplaceTokenInFile($file){
                                  | Set-Content $file.fullname
 
 }
+
+# Get all files in path
+Write-Host("Getting all files from " + $Path + ", using the filter: " + $Filter)
+
+Get-ChildItem $Path -Recurse -Include $Filter |
+    ForEach-Object {
+        ReplaceTokenInFile($_)
+    }
