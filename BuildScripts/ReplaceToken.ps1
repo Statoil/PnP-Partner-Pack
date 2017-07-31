@@ -9,7 +9,7 @@ if($Filter -eq $null -or $Filter -eq ""){
 
 function ReplaceTokenInFile($file){
     
-    Write-Host("Replacing token in file: " + $file.name)
+    Write-Host("Replacing token in file: " + $file.fullname)
 
     (Get-Content $file.fullname) -replace '{{Office365Tenant}}', $Tenant `
                                  -replace '{{AppOnlyCertificateThumbprint}}', $CertThumbprint `
