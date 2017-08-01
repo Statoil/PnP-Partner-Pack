@@ -1,7 +1,15 @@
-﻿param([string]$Path, [string]$Tenant, [string]$CertThumbprint, [string]$InfraSiteUrl, [string]$BuildVersion, [string]$Release, [string]$Filter)
+﻿#param([string]$Path, [string]$Tenant, [string]$CertThumbprint, [string]$InfraSiteUrl, [string]$BuildVersion, [string]$Release, [string]$Filter)
 
 
-# Set which file ending to enclude in the replace
+$Path = "$(System.DefaultWorkingDirectory)\PnP Partner Pack\drop\Tmp"
+$Tenant = "$(tenant)"
+$CertThumbprint = "$(appOnlyCertificateThumbprint)"
+$InfraSiteUrl = "$(infrastructureSiteUrl)"
+$BuildVersion = "$(Build.BuildNumber)"
+$Release = "$(Release.ReleaseName)"
+$Filter = ""
+
+# Set which file ending to include in the replace
 if($Filter -eq $null -or $Filter -eq ""){
     Write-Host("Files to replace not defined, using default files")
     $Filter = ('app.config','web.config')
@@ -11,9 +19,9 @@ function ReplaceTokenInFile($file){
     
     Write-Host("Replacing token in file: " + $file.fullname)
 
-    (Get-Content $file.fullname) -replace '{{Office365Tenant}}', $Tenant `
-                                 -replace '{{AppOnlyCertificateThumbprint}}', $CertThumbprint `
-                                 -replace '{{InfrastructureSiteUrl}}', $InfraSiteUrl `
+    (Get-Content $file.fullname) -replace '{{tenant}}', $Tenant `
+                                 -replace '{{appOnlyCertificateThumbprint}}', $CertThumbprint `
+                                 -replace '{{infrastructureSiteUrl}}', $InfraSiteUrl `
                                  -replace '{{BuildVersion}}', $BuildVersion `
                                  -replace '{{Release}}', $Release `
                                  | Set-Content $file.fullname
@@ -27,3 +35,4 @@ Get-ChildItem $Path -Recurse -Include $Filter |
     ForEach-Object {
         ReplaceTokenInFile($_)
     }
+Write-Host("Replace token completed")
